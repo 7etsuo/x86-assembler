@@ -1,0 +1,13 @@
+/.vscode
+/main
+assembler
+*.o
+a.out
+main
+of
+assembler_instruction_handler
+assembler_modrm_sib
+assembler_opcode
+assembler_perfect_hash
+assembler_registers
+assembler_sysmov

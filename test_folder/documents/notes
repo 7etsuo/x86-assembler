@@ -1,0 +1,41 @@
+Todo: 
+
+once you get your code to the point where you're going to test it
+make an empty ELF with echo "" | gcc -c -o blah.out -xc -
+and then add your code with objcopy --add-section 
+
+make O(1) lookups map strings to hex values. 
+
+typedef void (*HandlerFn)();
+typedef void (TheClass::*ClassHandlerFn)();
+ClassHandlerFn handler = &TheClass::somemethod;
+TheClass myclass;
+((myclass).*(handler))();
+
+that'll call TheClass::somemethod()
+
+/*
+
+MOV  EAX, [0100]                                        ; 8b 05 40 00 00 00     <- mod R/M with displacement. 
+MOV  EAX, EDX                                           ; 8b c2 or 89 d0        <- mod R/M 
+MOV  EAX, DWORD PTR [ESI]                               ; 8b 06                 <- mod R/M with
+MOV  EAX, DWORD PTR [EBP-8]                             ; 8b f8                 <- mod R/M with, displacement 
+MOV  EAX, DWORD PTR [EBX * 4 + 0100]                    ; 8b 04 9d 40 00 00 00  <- mod R/M with, displacement and scaled index
+MOV  EAX, DWORD PTR [EDX + EBX * 4 + 8]                 ; 8b 44 9a 08           <- mod R/M with, displacement and scaled
+MOV  EAX,    8h
+MOV  EAX,   10o
+MOV  EAX, 1000b
+
+*/
+
+Some more examples of mov instructions using address computations are:
+
+mov eax, [ebx]	            ; Move the 4 bytes in memory at the address contained in EBX into EAX
+mov [var], ebx	            ; Move the contents of EBX into the 4 bytes at memory address var. (Note, var is a 32-bit constant).
+mov eax, [esi-4]	        ; Move 4 bytes at memory address ESI + (-4) into EAX
+mov [esi+eax], cl	        ; Move the contents of CL into the byte at address ESI+EAX
+mov edx, [esi+4*ebx]        ; Move the 4 bytes of data at address ESI+4*EBX into EDX
+
+Some examples of invalid address calculations include:
+mov eax, [ebx-ecx]          ; Can only add register values
+mov [eax+esi+edi], ebx      ; At most 2 registers in address computation
